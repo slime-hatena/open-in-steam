@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setting generator - slime-hatena/launch-umamusume-from-steam</title>
+  <style>
+    body {
+      margin: .8em
+    }
+
+    input,
+    textarea {
+      font-family: monospace;
+      max-width: 620px;
+      width: calc(100vw - 3em);
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Setting generator</h1>
+  <a href="https://github.com/slime-hatena/open-in-steam/">readme</a>
+  <p>
+    起動するゲームの保存ディレクトリ:<br>
+    &nbsp;<input type="text" id="game_directory" placeholder="入力してください...">
+  </p>
+  <p>
+    スクリプトの保存先:<br>
+    &nbsp;<input type="text" id="script_directory" placeholder="入力してください...">
+  </p>
+  <p>
+    起動するプロセスの名前:<br>
+    &nbsp;<input type="text" id="start_process_name" placeholder="入力してください...">
+  </p>
+  <p>
+    待機するプロセスの名前:<br>
+    &nbsp;<input type="text" id="wait_process_name" placeholder="入力してください...">
+  </p>
+  <hr>
+
+  <p>
+    リンク先:<br>
+    &nbsp;<textarea readonly rows="3">"C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe"</textarea>
+  </p>
+  <p>
+    作業フォルダー:<br>
+    &nbsp;<textarea readonly id="word_dir" rows="3">"..."</textarea>
+  </p>
+  <p>
+    起動オプション:<br>
+    &nbsp;<textarea readonly id="option" rows="3">...</textarea>
+  </p>
+
+  <script>
+    const gameDirectoryElement = document.getElementById("game_directory");
+    const scriptDirectoryElement = document.getElementById("script_directory");
+    const startProcessNameElement = document.getElementById("start_process_name");
+    const waitProcessNameElement = document.getElementById("wait_process_name");
+
+    const workDirTextElement = document.getElementById("word_dir");
+    const optionTextElement = document.getElementById("option");
+
+
+    const changeWorkDir = () => {
+      workDirTextElement.value = `"${gameDirectoryElement.value}"`;
+    };
+    gameDirectoryElement.onchange = changeWorkDir;
+
+    const changeOptionText = () => {
+      optionTextElement.value = `-windowstyle hidden -NoProfile -ExecutionPolicy Bypass -Command "& \\"${scriptDirectoryElement.value}\\bin\\start.ps1\\" \\"${startProcessNameElement.value}\\" \\"${waitProcessNameElement.value}\\""`;
+    };
+    startProcessNameElement.onchange = changeOptionText;
+    waitProcessNameElement.onchange = changeOptionText;
+    scriptDirectoryElement.onchange = changeOptionText;
+  </script>
+</body>
+
+</html>
